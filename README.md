@@ -65,3 +65,33 @@ try (Workbook wb = new HSSFWorkbook()) {
 }
 ```
 默认将以空格替换掉非法字符，如果需要自定义替换字符，则调用**WorkbookUtil**的重载方法*createSafeSheetName(sheetName, replaceChar)*
+
+
+
+## 3. 创建Cell(单元格)
+```java
+try(Workbook wb = WorkbookFactory.create(false)){
+    Sheet s = wb.createSheet("mySheet");
+    Row r1 = s.createRow(1);
+    Cell r1c0 = r1.createCell(0);
+    r1c0.setCellValue("Hello, world!");
+    
+    Cell r1c1 = r1.createCell(1);
+    r1c1.setCellValue(true);
+    wb.write(new FileOutputStream("out/1.xls"));
+}catch (IOException e) {
+    e.printStackTrace();
+}
+```
+单元格(Cell)对象由行(Row)对象持有，在创建单元格之前，先使用Sheet对象创建一个行，然后使用Row创建一个单元格，通过**setCellValue**方法设置单元格的值，可设置的类型有：
+* **double**：数值类型，如1.25
+* **boolean**：布尔类型，如true
+* **String**：字符串类型，如"hi"
+* **Calendar/Date**：日期类型
+
+直接使用**setCellValue(val)**方法设置单元格的值，各类型的表现如下图所示(office 2010)：
+![cell vlaue perform](images/5.jpg)
+
+通过上图可以发现各类型的值在表现上有以下两个问题：
+1. 横向对齐方式：数值类型的默认右对齐，布尔类型居中，字符串左对齐
+2. 日期值显示错误：显示的日期值实际为数值
