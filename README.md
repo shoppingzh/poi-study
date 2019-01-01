@@ -180,3 +180,24 @@ private final static String[] _formats = {
 	};
 ```
 
+
+
+## 4. Cell对齐
+### 4.1 水平对齐
+```java
+try (Workbook wb = WorkbookFactory.create(false)) {
+    Sheet s = wb.createSheet("mySheet");
+    Row r0 = s.createRow(0);
+    setAlign(wb, r0.createCell(0), "general", HorizontalAlignment.GENERAL);
+    setAlign(wb, r0.createCell(1), "left", HorizontalAlignment.LEFT);
+    setAlign(wb, r0.createCell(2), "center", HorizontalAlignment.CENTER);
+    setAlign(wb, r0.createCell(3), "right", HorizontalAlignment.RIGHT);
+    setAlign(wb, r0.createCell(4), "fill", HorizontalAlignment.FILL);
+    setAlign(wb, r0.createCell(5), "justify(自适应可自动换行)", HorizontalAlignment.JUSTIFY);
+    setAlign(wb, r0.createCell(6), "center selection", HorizontalAlignment.CENTER_SELECTION);
+    setAlign(wb, r0.createCell(7), "distrubuted", HorizontalAlignment.DISTRIBUTED);
+    write(wb);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
