@@ -36,11 +36,11 @@ public class App {
             Row r1 = s.createRow(1);
             r1.createCell(0).setCellValue("数值");
             r1.createCell(1).setCellValue(1.25);
-            
+
             Row r2 = s.createRow(2);
             r2.createCell(0).setCellValue("布尔");
             r2.createCell(1).setCellValue(false);
-            
+
             Row r3 = s.createRow(3);
             r3.createCell(0).setCellValue("字符串");
             r3.createCell(1).setCellValue("Hello, world!");
@@ -48,11 +48,11 @@ public class App {
             Row r4 = s.createRow(4);
             r4.createCell(0).setCellValue("Calendar");
             r4.createCell(1).setCellValue(Calendar.getInstance());
-            
+
             Row r5 = s.createRow(5);
             r5.createCell(0).setCellValue("Date");
             r5.createCell(1).setCellValue(Calendar.getInstance().getTime());
-            
+
             write(wb);
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,7 +77,6 @@ public class App {
             r1c0.setCellValue(new Date());
 
             CellStyle cs = wb.createCellStyle();
-            wb.createDataFormat().getFormat("yyyy-MM-dd");
             cs.setDataFormat((short) BuiltinFormats.getBuiltinFormat("m/d/yy h:mm"));
             r1c0.setCellStyle(cs);
             write(wb);
