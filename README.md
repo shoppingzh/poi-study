@@ -88,13 +88,14 @@ try(Workbook wb = WorkbookFactory.create(false)){
 * **boolean**：布尔类型，如true
 * **String**：字符串类型，如"hi"
 * **Calendar/Date**：日期类型
+* **RichTextString**：富文本类型
 
 直接使用**setCellValue(val)**方法设置单元格的值，各类型的表现如下图所示(office 2010)：
 ![cell vlaue perform](images/5.jpg)
 
 通过上图可以发现各类型的值在表现上有以下两个问题：
-1. 横向对齐方式：数值类型的默认右对齐，布尔类型居中，字符串左对齐
-2. 日期值显示错误：显示的日期值实际为数值
+1. 横向对齐方式：数值类型的默认右对齐，布尔类型居中，字符串左对齐（**如果不指定类型，则默认使用org.apache.poi.ss.usermodel.HorizontalAlignment.GENERAL的对齐风格**）
+2. 日期值显示错误：显示的日期值实际为数值，这是因为单元格没有进行数据格式化，接下来将演示如何创建一个日期类型的单元格
 ### 创建日期Cell
 ```java
 try (Workbook wb = WorkbookFactory.create(false)) {
