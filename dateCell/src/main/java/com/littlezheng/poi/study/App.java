@@ -17,14 +17,9 @@ import org.junit.Test;
 
 public class App {
     
-    public static void main(String[] args) {
-        System.out.println(days("2019-01-03", "1900-12-31"));
-    }
-
     public static int days(String from, String to) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
-
             Calendar c1 = Calendar.getInstance();
             c1.setTime(df.parse(from));
             Calendar c2 = Calendar.getInstance();
@@ -54,7 +49,7 @@ public class App {
                 total += (fromCal.getActualMaximum(Calendar.DAY_OF_YEAR) - fromYearDay + toYearDay);
             }
 
-            return lt ? total : -1 * total;
+            return lt ? -1 * total : total;
         } catch (ParseException e) {
             e.printStackTrace();
         }
