@@ -184,19 +184,18 @@ private final static String[] _formats = {
 
 
 ## 4. Cell对齐
-### 4.1 水平对齐
 ```java
 try (Workbook wb = WorkbookFactory.create(false)) {
     Sheet s = wb.createSheet("mySheet");
+    s.setDefaultColumnWidth(20);
     Row r0 = s.createRow(0);
-    setAlign(wb, r0.createCell(0), "general", HorizontalAlignment.GENERAL);
-    setAlign(wb, r0.createCell(1), "left", HorizontalAlignment.LEFT);
-    setAlign(wb, r0.createCell(2), "center", HorizontalAlignment.CENTER);
-    setAlign(wb, r0.createCell(3), "right", HorizontalAlignment.RIGHT);
-    setAlign(wb, r0.createCell(4), "fill", HorizontalAlignment.FILL);
-    setAlign(wb, r0.createCell(5), "justify(自适应可自动换行)", HorizontalAlignment.JUSTIFY);
-    setAlign(wb, r0.createCell(6), "center selection", HorizontalAlignment.CENTER_SELECTION);
-    setAlign(wb, r0.createCell(7), "distrubuted", HorizontalAlignment.DISTRIBUTED);
+    r0.setHeightInPoints(30f);
+    Cell r0c0 = r0.createCell(0);
+    r0c0.setCellValue("center text");
+    CellStyle cs = wb.createCellStyle();
+    cs.setAlignment(HorizontalAlignment.CENTER);
+    cs.setVerticalAlignment(VerticalAlignment.CENTER);
+    r0c0.setCellStyle(cs);
     write(wb);
 } catch (IOException e) {
     e.printStackTrace();
