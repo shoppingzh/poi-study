@@ -9,6 +9,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BuiltinFormats;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,6 +21,79 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
 public class App {
+    
+    @Test
+    public void unFormatCell() {
+        try (Workbook wb = WorkbookFactory.create(true)) {
+            Sheet s = wb.createSheet("my sheet");
+            Row r0 = s.createRow(0);
+            Calendar c = Calendar.getInstance();
+            c.set(2019, 0, 3, 16, 20, 15);
+            c.set(Calendar.MILLISECOND, 0);
+            r0.createCell(0).setCellValue(c.getTime());
+
+            write(wb);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void formatCell(){
+        try (Workbook wb = WorkbookFactory.create(true)) {
+            Sheet s = wb.createSheet("my sheet");
+            Row r0 = s.createRow(0);
+            Calendar c = Calendar.getInstance();
+            c.set(2019, 0, 3, 16, 20, 15);
+            c.set(Calendar.MILLISECOND, 0);
+            Cell r0c0 = r0.createCell(0);
+            r0c0.setCellValue(c.getTime());
+            
+            // 格式化日期
+            CellStyle cs = wb.createCellStyle();
+            cs.setDataFormat((short)BuiltinFormats.getBuiltinFormat("m/d/yy h:mm"));
+            r0c0.setCellStyle(cs);
+
+            write(wb);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void readDateCell() {
+        try (Workbook wb = WorkbookFactory.create(new File(getOutDir(), "formatCell.xlsx"))) {
+            Sheet s = wb.getSheetAt(0);
+            for (Row r : s) {
+                for (Cell c : r) {
+                    if (c.getCellType() == CellType.NUMERIC) {
+                        if (DateUtil.isCellDateFormatted(c)) {
+                            System.out
+                                    .println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getDateCellValue()));
+                        }
+                    }
+                }
+            }
+
+            write(wb);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void write(Workbook wb) throws IOException {
+        String fileName = new Exception().getStackTrace()[1].getMethodName()
+                + (wb instanceof HSSFWorkbook ? ".xls" : ".xlsx");
+        wb.write(new FileOutputStream(new File(getOutDir(), fileName)));
+    }
+
+    public static File getOutDir() {
+        File path = new File("out");
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        return path;
+    }
     
     public static int days(String from, String to) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -64,36 +142,6 @@ public class App {
         tmp.set(Calendar.MINUTE, 0);
         tmp.set(Calendar.SECOND, 0);
         tmp.set(Calendar.MILLISECOND, 0);
-    }
-
-    @Test
-    public void unFormatCell() {
-        try (Workbook wb = WorkbookFactory.create(true)) {
-            Sheet s = wb.createSheet("my sheet");
-            Row r0 = s.createRow(0);
-            Calendar c = Calendar.getInstance();
-            c.set(2019, 0, 3, 16, 20, 15);
-            c.set(Calendar.MILLISECOND, 0);
-            r0.createCell(0).setCellValue(c.getTime());
-
-            write(wb);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void write(Workbook wb) throws IOException {
-        String fileName = new Exception().getStackTrace()[1].getMethodName()
-                + (wb instanceof HSSFWorkbook ? ".xls" : ".xlsx");
-        wb.write(new FileOutputStream(new File(getOutDir(), fileName)));
-    }
-
-    public static File getOutDir() {
-        File path = new File("out");
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        return path;
     }
 
 }
