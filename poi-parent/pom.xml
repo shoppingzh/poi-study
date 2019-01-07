@@ -5,6 +5,9 @@
   <artifactId>poi-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <name>poi study</name>
+  <url>https://github.com/shoppingzh/poi-study</url>
+  <description>Apache poi完整学习例程</description>
 
   <properties>
     <poi.version>4.0.1</poi.version>
@@ -26,7 +29,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.12</version>
+        <version>${junit.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
