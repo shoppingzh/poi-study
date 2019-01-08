@@ -29,10 +29,10 @@ public class App {
             r0.setHeightInPoints(30f);
             Cell r0c0 = r0.createCell(0);
             r0c0.setCellValue("center text");
-            CellStyle cs1 = wb.createCellStyle();
-            cs1.setAlignment(HorizontalAlignment.CENTER);
-            cs1.setVerticalAlignment(VerticalAlignment.CENTER);
-            r0c0.setCellStyle(cs1);
+            CellStyle cs = wb.createCellStyle();
+            cs.setAlignment(HorizontalAlignment.CENTER);
+            cs.setVerticalAlignment(VerticalAlignment.CENTER);
+            r0c0.setCellStyle(cs);
             write(wb);
         } catch (IOException e) {
             e.printStackTrace();
