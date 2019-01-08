@@ -183,22 +183,93 @@ private final static String[] _formats = {
 
 
 
-## 4. Cell对齐
-### 4.1 水平对齐
+## 4. 设置单元格格式
+
+
+
+
+## 5. 单元格对齐
 ```java
 try (Workbook wb = WorkbookFactory.create(false)) {
     Sheet s = wb.createSheet("mySheet");
+    s.setDefaultColumnWidth(20);
     Row r0 = s.createRow(0);
-    setAlign(wb, r0.createCell(0), "general", HorizontalAlignment.GENERAL);
-    setAlign(wb, r0.createCell(1), "left", HorizontalAlignment.LEFT);
-    setAlign(wb, r0.createCell(2), "center", HorizontalAlignment.CENTER);
-    setAlign(wb, r0.createCell(3), "right", HorizontalAlignment.RIGHT);
-    setAlign(wb, r0.createCell(4), "fill", HorizontalAlignment.FILL);
-    setAlign(wb, r0.createCell(5), "justify(自适应可自动换行)", HorizontalAlignment.JUSTIFY);
-    setAlign(wb, r0.createCell(6), "center selection", HorizontalAlignment.CENTER_SELECTION);
-    setAlign(wb, r0.createCell(7), "distrubuted", HorizontalAlignment.DISTRIBUTED);
+    r0.setHeightInPoints(30f);
+    Cell r0c0 = r0.createCell(0);
+    r0c0.setCellValue("center text");
+    CellStyle cs1 = wb.createCellStyle();
+    cs1.setAlignment(HorizontalAlignment.CENTER);
+    cs1.setVerticalAlignment(VerticalAlignment.CENTER);
+    r0c0.setCellStyle(cs1);
     write(wb);
 } catch (IOException e) {
     e.printStackTrace();
 }
+```
+以上代码设置单元格的水平、垂直对齐方式为居中对齐，该操作通过**CellStyle.setAlignment(HorizontalAlignment)**与**CellStyle.setVerticalAlignment(VerticalAlignment)**两个方法完成。
+
+excel中，水平对齐有以下对齐方式：
+1. 常规(General)：自动对齐，数字类型居右，字符串居左，布尔类型居中
+2. 居左(Left)：靠左对齐，**可设置缩进**
+3. 居中(Center)：居中对齐
+4. 居右(Left)：靠右对齐，**可设置缩进**
+5. 填充(Fill)：将内容在单元格的水平方向填充
+6. 两端对齐(Justify)：除了最后一行，其它每行文本左右对齐（**注：没有试出效果**）
+7. 跨列居中(Center selection)：与居中不同，跨列居中的单元格在单元格的宽度不够时，会跨越到其它列显示
+8. 分散对齐(Distrubuted)：将单元格中的每个**词**均匀地分布在单元格中，单元格宽度改变，各个词之间的间隔动态变化
+
+以上八中对齐方式在excel中的表现如下图：
+![](images/6.jpg)
+
+
+
+垂直对齐方式：
+1. 居上(Top)：内容贴近单元格顶部
+2. 居中(Center)：内容在单元格垂直方向居中
+3. 居下(Bottom)：内容贴近单元格底部
+4. 两端对齐(Justify)：内容在垂直方向均匀分布
+5. 分散对齐(Distrubuted)：与两端对齐效果相同
+
+以上5中对齐方式在excel中的表现如下图：
+![](images/7.jpg)
+
+
+
+## 6. 为单元格设置边框
+```java
+try(Workbook wb = WorkbookFactory.create(true)){
+    Sheet s = wb.createSheet("my sheet");
+    Row r = s.createRow(2);
+    Cell c = r.createCell(5);
+    r.setHeightInPoints(50f);
+    c.setCellValue("hello");
+    
+    CellStyle cs = wb.createCellStyle();
+    c.setCellStyle(cs);
+    cs.setBorderTop(BorderStyle.THIN);
+    cs.setTopBorderColor(IndexedColors.RED.getIndex());
+    cs.setBorderRight(BorderStyle.MEDIUM_DASHED);
+    cs.setRightBorderColor(IndexedColors.BLUE.getIndex());
+    cs.setBorderBottom(BorderStyle.DOTTED);
+    cs.setBottomBorderColor(IndexedColors.PINK.getIndex());
+    cs.setBorderLeft(BorderStyle.DOUBLE);
+    cs.setLeftBorderColor(IndexedColors.YELLOW.getIndex());
+    
+    write(wb);
+}catch (IOException e) {
+    e.printStackTrace();
+}
+```
+边框的设置有三要素：位置(position)，粗细(width)，颜色(color)，poi中设置边框样式的示意图如下：
+![](images/8.jpg)
+
+在excel中设置边框的方式如下所示：
+![](images/9.jpg)
+可见，在excel中设置边框的选择更多样，可以设置斜的边框（严格意义上说这应该不算边框）。
+
+
+
+## 7. 设置单元格背景
+```java
+
 ```

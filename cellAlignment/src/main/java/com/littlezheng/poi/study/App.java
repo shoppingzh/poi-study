@@ -19,7 +19,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
 public class App {
-
+    
     @Test
     public void align() {
         try (Workbook wb = WorkbookFactory.create(false)) {
@@ -49,9 +49,9 @@ public class App {
             setAlign(wb, r0.createCell(2), "center", HorizontalAlignment.CENTER);
             setAlign(wb, r0.createCell(3), "right", HorizontalAlignment.RIGHT);
             setAlign(wb, r0.createCell(4), "fill", HorizontalAlignment.FILL);
-            setAlign(wb, r0.createCell(5), "justify(自适应可自动换行)", HorizontalAlignment.JUSTIFY);
+            setAlign(wb, r0.createCell(5), "hello,world!\nnice day\n wow!", HorizontalAlignment.JUSTIFY);
             setAlign(wb, r0.createCell(6), "center selection", HorizontalAlignment.CENTER_SELECTION);
-            setAlign(wb, r0.createCell(7), "distrubuted", HorizontalAlignment.DISTRIBUTED);
+            setAlign(wb, r0.createCell(7), "hello,world!\nnice day\n wow!", HorizontalAlignment.DISTRIBUTED);
             write(wb);
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,10 +64,10 @@ public class App {
             Sheet s = wb.createSheet("mySheet");
             Row r0 = s.createRow(0);
             setAlign(wb, r0.createCell(0), "top", VerticalAlignment.TOP);
-            setAlign(wb, r0.createCell(1), "fill", VerticalAlignment.CENTER);
+            setAlign(wb, r0.createCell(1), "center", VerticalAlignment.CENTER);
             setAlign(wb, r0.createCell(2), "bottom", VerticalAlignment.BOTTOM);
-            setAlign(wb, r0.createCell(3), "justify(自适应可自动换行)", VerticalAlignment.JUSTIFY);
-            setAlign(wb, r0.createCell(4), "distrubuted", VerticalAlignment.DISTRIBUTED);
+            setAlign(wb, r0.createCell(3), "hello,world!\nnice day\n wow!", VerticalAlignment.JUSTIFY);
+            setAlign(wb, r0.createCell(4), "hello,world!\nnice day\n wow!", VerticalAlignment.DISTRIBUTED);
             write(wb);
         } catch (IOException e) {
             e.printStackTrace();
