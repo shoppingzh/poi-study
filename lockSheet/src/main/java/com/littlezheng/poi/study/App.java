@@ -7,9 +7,6 @@ import java.io.IOException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -18,20 +15,15 @@ import org.junit.Test;
 public class App {
 
     @Test
-    public void background() {
+    public void lockSheet() {
         try (Workbook wb = WorkbookFactory.create(true)) {
             Sheet s = wb.createSheet("my sheet");
-            Cell c = s.createRow(2).createCell(5);
-            c.setCellValue("hello");
-
+            Cell c = s.createRow(3).createCell(3);
+            c.setCellValue("Hello");
             CellStyle cs = wb.createCellStyle();
-            Font f = wb.createFont();
-            f.setColor(IndexedColors.WHITE.getIndex());
-            cs.setFont(f);
-            cs.setFillForegroundColor(IndexedColors.PINK.getIndex());
-            cs.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            cs.setLocked(false);
             c.setCellStyle(cs);
-
+            s.protectSheet("123");
             write(wb);
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,5 +43,4 @@ public class App {
         }
         return path;
     }
-
 }

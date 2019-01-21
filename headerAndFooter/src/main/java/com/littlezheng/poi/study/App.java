@@ -5,11 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Footer;
+import org.apache.poi.ss.usermodel.Header;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -18,21 +15,33 @@ import org.junit.Test;
 public class App {
 
     @Test
-    public void background() {
+    public void header() {
         try (Workbook wb = WorkbookFactory.create(true)) {
-            Sheet s = wb.createSheet("my sheet");
-            Cell c = s.createRow(2).createCell(5);
-            c.setCellValue("hello");
 
-            CellStyle cs = wb.createCellStyle();
-            Font f = wb.createFont();
-            f.setColor(IndexedColors.WHITE.getIndex());
-            cs.setFont(f);
-            cs.setFillForegroundColor(IndexedColors.PINK.getIndex());
-            cs.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            c.setCellStyle(cs);
+            Sheet s = wb.createSheet("my sheet");
+            s.createRow(3).createCell(4).setCellValue("Hello");
+            Header h = s.getHeader();
+            h.setCenter("Header center");
 
             write(wb);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void footer() {
+        try (Workbook wb = WorkbookFactory.create(true)) {
+
+            Sheet s = wb.createSheet("my sheet");
+            s.createRow(3).createCell(4).setCellValue("Hello");
+            Footer f = s.getFooter();
+            f.setRight("Fotter right");
+            
+            
+            write(wb);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,5 +60,4 @@ public class App {
         }
         return path;
     }
-
 }
