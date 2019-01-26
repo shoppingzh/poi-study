@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
 public class App {
-
+    
     @Test
     public void readLink() {
         try (Workbook wb = WorkbookFactory.create(new File("out/1.xls"))) {
@@ -93,9 +92,7 @@ public class App {
             if (DateUtil.isCellDateFormatted(c)) {
                 o = c.getDateCellValue();
             } else {
-                DecimalFormat df = new DecimalFormat("#.##");
                 o = c.getNumericCellValue();
-                System.out.println(df.format(o));
             }
         default:
             break;
